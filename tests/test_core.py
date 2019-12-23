@@ -97,6 +97,10 @@ class TestSanityCheckNet(unittest.TestCase):
         with self.assertRaisesRegexp(pyrtl.PyrtlInternalError, exp_message):
             pyrtl.working_block().add_net(*args)
 
+    def invalid_net_ext(self, exp_message, *args):
+        with self.assertRaisesRegexp(pyrtl.PyrtlError, exp_message):
+            pyrtl.working_block().add_net(*args)
+
     @staticmethod
     def new_net(op='&', op_param=None, args=None, dests=None):
         if args is None or isinstance(args, int):
@@ -135,11 +139,11 @@ class TestSanityCheckNet(unittest.TestCase):
         const = pyrtl.Const(2)
         outp = pyrtl.Output(2)
         net = self.new_net(dests=(inp,))
-        self.invalid_net("Inputs, Consts cannot be destinations", net)
+        self.invalid_net_ext("Inputs, Consts cannot be destinations", net)
         net = self.new_net(dests=(const,))
-        self.invalid_net("Inputs, Consts cannot be destinations", net)
+        self.invalid_net_ext("Inputs, Consts cannot be destinations", net)
         net = self.new_net(args=(outp, outp))
-        self.invalid_net("Outputs cannot be arguments", net)
+        self.invalid_net_ext("Outputs cannot be arguments", net)
 
         wrong_ops = ('%', '!', 'a', 'f', '<<', '>>', '&&', '||', '==')
         for op in wrong_ops:

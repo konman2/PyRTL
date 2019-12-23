@@ -563,10 +563,10 @@ class Block(object):
         # checks that input and output wirevectors are not misused
         for w in net.dests:
             if isinstance(w, (Input, Const)):
-                raise PyrtlInternalError('error, Inputs, Consts cannot be destinations to a net')
+                raise PyrtlError('error, Inputs, Consts cannot be destinations to a net')
         for w in net.args:
             if isinstance(w, Output):
-                raise PyrtlInternalError('error, Outputs cannot be arguments for a net')
+                raise PyrtlError('error, Outputs cannot be arguments for a net')
 
         if net.op not in self.legal_ops:
             raise PyrtlInternalError('error, net op "%s" not from acceptable set %s' %

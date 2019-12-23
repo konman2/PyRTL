@@ -321,18 +321,18 @@ class TestOutput(unittest.TestCase):
     def test_assign_output(self):
         o = pyrtl.Output(1)
         w = pyrtl.WireVector(1)
-        with self.assertRaises(pyrtl.PyrtlInternalError):
+        with self.assertRaises(pyrtl.PyrtlError):
             w <<= o
 
     def test_log_op_output(self):
         o = pyrtl.Output(1)
         w = pyrtl.WireVector(1)
-        with self.assertRaises(pyrtl.PyrtlInternalError):
+        with self.assertRaises(pyrtl.PyrtlError):
             x = w & o
 
     def test_slice_output(self):
         o = pyrtl.Output(2)
-        with self.assertRaises(pyrtl.PyrtlInternalError):
+        with self.assertRaises(pyrtl.PyrtlError):
             x = o[0]
 
 
